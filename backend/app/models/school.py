@@ -81,3 +81,4 @@ class School(SQLModel, table=True):
     zone: Optional["SchoolZone"] = Relationship(back_populates="schools")
 
 
+

@@ -21,3 +21,4 @@ class SchoolZone(SQLModel, table=True):
     schools: List["School"] = Relationship(back_populates="zone")
 
 
+

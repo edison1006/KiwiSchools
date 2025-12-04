@@ -37,3 +37,4 @@ export async function fetchSchoolById(id: number): Promise<School> {
 }
 
 
+

@@ -22,3 +22,4 @@ export async function fetchUniversityById(id: number): Promise<University> {
 }
 
 
+

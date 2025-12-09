@@ -10,9 +10,24 @@ export function UniversityListPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [city, setCity] = useState(searchParams.get("city") ?? "");
-  const [type, setType] = useState(searchParams.get("university_type") ?? "");
-  const [keyword, setKeyword] = useState(searchParams.get("keyword") ?? "");
+  // When university_type is set from URL (e.g., from homepage card click),
+  // clear other filters to ensure independent search
+  const urlUniversityType = searchParams.get("university_type") ?? "";
+  const urlCity = searchParams.get("city");
+  const urlKeyword = searchParams.get("keyword");
+  const hasOnlyUniversityType = urlUniversityType && !urlKeyword && !urlCity;
+
+  const [city, setCity] = useState(urlCity ?? "");
+  const [type, setType] = useState(urlUniversityType);
+  const [keyword, setKeyword] = useState(urlKeyword ?? "");
+
+  // Clear other filters when coming from homepage card click (only university_type in URL)
+  useEffect(() => {
+    if (hasOnlyUniversityType) {
+      setCity("");
+      setKeyword("");
+    }
+  }, [urlUniversityType, urlCity, urlKeyword]);
 
   useEffect(() => {
     const params: UniversityListParams = {
@@ -117,6 +132,8 @@ export function UniversityListPage() {
     </div>
   );
 }
+
+
 
 
 

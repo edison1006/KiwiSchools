@@ -1,0 +1,21 @@
+{
+  "appName": "KiwiSchools",
+  "signIn": "登录",
+  "discoverSchools": "探索新西兰各地的学校",
+  "searchPlaceholder": "按学校名称搜索...",
+  "search": "搜索",
+  "loginTitle": "登录您的账户",
+  "loginSubtitle": "欢迎回来！请输入您的详细信息。",
+  "email": "电子邮箱",
+  "emailPlaceholder": "you@example.com",
+  "password": "密码",
+  "passwordPlaceholder": "请输入您的密码",
+  "rememberMe": "记住我",
+  "forgotPassword": "忘记密码？",
+  "login": "登录",
+  "loggingIn": "登录中...",
+  "noAccount": "还没有账户？",
+  "signUp": "注册",
+  "loginError": "登录失败。请检查您的凭据后重试。"
+}
+

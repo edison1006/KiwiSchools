@@ -23,6 +23,10 @@ export function KindergartenListPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // When coming from homepage card click, clear other filters
+  // Kindergarten page doesn't have a type filter, so we check if URL has no filters
+  const hasNoFilters = !searchParams.get("keyword") && !searchParams.get("region_id") && !searchParams.get("education_system");
+
   const [keyword, setKeyword] = useState(searchParams.get("keyword") ?? "");
   const [selectedRegionId, setSelectedRegionId] = useState<string>(
     searchParams.get("region_id") ?? ""
@@ -41,17 +45,22 @@ export function KindergartenListPage() {
   }, []);
 
   useEffect(() => {
+    // Convert region_id to region name for API call
+    const selectedRegion = selectedRegionId
+      ? regions.find((r) => r.id === Number(selectedRegionId))
+      : null;
+
     const params: KindergartenListParams = {
       keyword: keyword || undefined,
       education_system: educationSystem || undefined,
-      region_id: selectedRegionId ? Number(selectedRegionId) : undefined
+      region: selectedRegion?.name, // Use region name instead of region_id
     };
 
     const nextSearch = new URLSearchParams();
     if (params.keyword) nextSearch.set("keyword", params.keyword);
     if (params.education_system)
       nextSearch.set("education_system", params.education_system);
-    if (params.region_id) nextSearch.set("region_id", String(params.region_id));
+    if (selectedRegionId) nextSearch.set("region_id", selectedRegionId);
     setSearchParams(nextSearch);
 
     setLoading(true);
@@ -66,7 +75,7 @@ export function KindergartenListPage() {
         setError(message);
       })
       .finally(() => setLoading(false));
-  }, [keyword, educationSystem, selectedRegionId, setSearchParams]);
+  }, [keyword, educationSystem, selectedRegionId, regions, setSearchParams]);
 
   return (
     <div className="space-y-4">
@@ -150,6 +159,8 @@ export function KindergartenListPage() {
     </div>
   );
 }
+
+
 
 
 

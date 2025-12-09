@@ -11,7 +11,11 @@ export async function fetchUniversities(
   params: UniversityListParams
 ): Promise<University[]> {
   const response = await apiClient.get<University[]>("/universities", {
-    params
+    params: {
+      city: params.city,
+      university_type: params.university_type,
+      name: params.keyword, // Backend uses 'name' parameter
+    }
   });
   return response.data;
 }
@@ -20,6 +24,8 @@ export async function fetchUniversityById(id: number): Promise<University> {
   const response = await apiClient.get<University>(`/universities/${id}`);
   return response.data;
 }
+
+
 
 
 

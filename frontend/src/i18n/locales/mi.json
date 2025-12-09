@@ -1,0 +1,21 @@
+{
+  "appName": "KiwiSchools",
+  "signIn": "Takiuru",
+  "discoverSchools": "Kimihia ngā kura puta noa i Aotearoa",
+  "searchPlaceholder": "Kimihia mā te ingoa o te kura...",
+  "search": "Kimihia",
+  "loginTitle": "Takiuru ki tō pūkete",
+  "loginSubtitle": "Nau mai hoki mai! Tēnā whakauruhia ō raraunga.",
+  "email": "Īmēra",
+  "emailPlaceholder": "koe@tauira.com",
+  "password": "Kupu huna",
+  "passwordPlaceholder": "Whakauruhia tō kupu huna",
+  "rememberMe": "Maumahara mai",
+  "forgotPassword": "Kua wareware i te kupu huna?",
+  "login": "Takiuru",
+  "loggingIn": "Kei te takiuru...",
+  "noAccount": "Kāore anō koe i te whai pūkete?",
+  "signUp": "Rēhita",
+  "loginError": "Kua rawa te takiuru. Tēnā tirohia ō taunaki, ka ngana anō."
+}
+

@@ -3,6 +3,7 @@ import type { Kindergarten } from "../types";
 
 export interface KindergartenListParams {
   region_id?: number;
+  region?: string; // Backend uses region string
   city?: string;
   suburb?: string;
   education_system?: string;
@@ -21,24 +22,30 @@ export interface PaginatedKindergartens {
 export async function fetchKindergartens(
   params: KindergartenListParams
 ): Promise<PaginatedKindergartens> {
-  const response = await apiClient.get<PaginatedKindergartens>("/kindergartens", {
+  const response = await apiClient.get<Kindergarten[]>("/kindergartens", {
     params: {
-      region_id: params.region_id,
+      region: params.region, // Backend uses region string
       city: params.city,
       suburb: params.suburb,
       education_system: params.education_system,
-      keyword: params.keyword,
-      page: params.page ?? 1,
-      page_size: params.page_size ?? 20
+      name: params.keyword, // Backend uses 'name' parameter
     }
   });
-  return response.data;
+  // Convert List response to PaginatedKindergartens format
+  return {
+    items: response.data,
+    total: response.data.length,
+    page: params.page ?? 1,
+    page_size: params.page_size ?? 20
+  };
 }
 
 export async function fetchKindergartenById(id: number): Promise<Kindergarten> {
   const response = await apiClient.get<Kindergarten>(`/kindergartens/${id}`);
   return response.data;
 }
+
+
 
 
 

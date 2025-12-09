@@ -18,23 +18,29 @@ export interface PaginatedSchools {
 }
 
 export async function fetchSchools(params: SchoolListParams): Promise<PaginatedSchools> {
-  const response = await apiClient.get<PaginatedSchools>("/schools", {
+  const response = await apiClient.get<School[]>("/schools", {
     params: {
-      region_id: params.region_id,
       school_type: params.school_type,
-      ownership_type: params.ownership_type,
-      keyword: params.keyword,
-      page: params.page ?? 1,
-      page_size: params.page_size ?? 20
+      name: params.keyword, // Backend uses 'name' parameter
+      city: undefined, // Not used in current implementation
+      region: undefined, // Not used in current implementation
     }
   });
-  return response.data;
+  // Convert List response to PaginatedSchools format
+  return {
+    items: response.data,
+    total: response.data.length,
+    page: params.page ?? 1,
+    page_size: params.page_size ?? 20
+  };
 }
 
 export async function fetchSchoolById(id: number): Promise<School> {
   const response = await apiClient.get<School>(`/schools/${id}`);
   return response.data;
 }
+
+
 
 
 

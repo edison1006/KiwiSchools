@@ -51,3 +51,5 @@ export function KindergartenCard({ kindergarten }: Props) {
 
 
 
+
+

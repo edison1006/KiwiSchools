@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const QUICK_CITIES_BY_ISLAND = {
   north: ["Auckland", "Hamilton", "Tauranga", "Wellington"],
@@ -74,6 +75,7 @@ const SCHOOL_TYPE_CARDS = [
 ];
 
 export function HomePage() {
+  const { t } = useTranslation();
   const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
 
@@ -88,7 +90,7 @@ export function HomePage() {
       <section className="mt-4 flex flex-col gap-6 md:flex-row md:items-center">
         <div className="flex-1 space-y-3">
           <h1 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
-            Discover schools across New Zealand
+            {t("discoverSchools")}
           </h1>
           <p className="text-sm text-slate-600 md:text-base">
             Compare kindergartens, primary and secondary schools, universities and
@@ -98,7 +100,7 @@ export function HomePage() {
             <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-sm">
               <input
                 type="text"
-                placeholder="Search by school name..."
+                placeholder={t("searchPlaceholder")}
                 className="flex-1 border-none bg-transparent text-sm outline-none placeholder:text-slate-400"
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
@@ -107,7 +109,7 @@ export function HomePage() {
                 type="submit"
                 className="rounded-full bg-emerald-500 px-4 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-emerald-600"
               >
-                Search
+                {t("search")}
               </button>
             </div>
           </form>

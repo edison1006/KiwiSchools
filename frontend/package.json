@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
+    "i18next": "^25.7.2",
+    "i18next-browser-languagedetector": "^8.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-i18next": "^16.4.0",
     "react-router-dom": "^6.28.0"
   },
   "devDependencies": {
@@ -19,8 +22,8 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.14.0",
     "@typescript-eslint/parser": "^8.14.0",
-    "autoprefixer": "^10.4.20",
     "@vitejs/plugin-react-swc": "^3.7.1",
+    "autoprefixer": "^10.4.20",
     "eslint": "^9.14.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
@@ -30,4 +33,3 @@
     "vite": "^5.4.10"
   }
 }
-

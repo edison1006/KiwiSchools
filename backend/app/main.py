@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import schools, zones
+from app.api.routes import schools, zones, kindergartens, universities
 from app.core.config import get_settings
 
 
@@ -25,6 +25,8 @@ def create_app() -> FastAPI:
     # Routers
     app.include_router(schools.router)
     app.include_router(zones.router)
+    app.include_router(kindergartens.router)
+    app.include_router(universities.router)
 
     @app.get("/health")
     def health_check() -> dict:
@@ -34,6 +36,8 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
+
+
 
 
 

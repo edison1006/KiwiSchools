@@ -1,0 +1,21 @@
+{
+  "appName": "KiwiSchools",
+  "signIn": "Sign in",
+  "discoverSchools": "Discover schools across New Zealand",
+  "searchPlaceholder": "Search by school name...",
+  "search": "Search",
+  "loginTitle": "Sign in to your account",
+  "loginSubtitle": "Welcome back! Please enter your details.",
+  "email": "Email address",
+  "emailPlaceholder": "you@example.com",
+  "password": "Password",
+  "passwordPlaceholder": "Enter your password",
+  "rememberMe": "Remember me",
+  "forgotPassword": "Forgot password?",
+  "login": "Sign in",
+  "loggingIn": "Signing in...",
+  "noAccount": "Don't have an account?",
+  "signUp": "Sign up",
+  "loginError": "Login failed. Please check your credentials and try again."
+}
+

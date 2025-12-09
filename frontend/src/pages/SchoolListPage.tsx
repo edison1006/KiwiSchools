@@ -13,13 +13,24 @@ export function SchoolListPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [keyword, setKeyword] = useState(searchParams.get("keyword") ?? "");
-  const [schoolType, setSchoolType] = useState(
-    searchParams.get("school_type") ?? ""
-  );
-  const [ownershipType, setOwnershipType] = useState(
-    searchParams.get("ownership_type") ?? ""
-  );
+  // When school_type is set from URL (e.g., from homepage card click),
+  // clear other filters to ensure independent search
+  const urlSchoolType = searchParams.get("school_type") ?? "";
+  const urlKeyword = searchParams.get("keyword");
+  const urlOwnershipType = searchParams.get("ownership_type");
+  const hasOnlySchoolType = urlSchoolType && !urlKeyword && !urlOwnershipType;
+
+  const [keyword, setKeyword] = useState(urlKeyword ?? "");
+  const [schoolType, setSchoolType] = useState(urlSchoolType);
+  const [ownershipType, setOwnershipType] = useState(urlOwnershipType ?? "");
+
+  // Clear other filters when coming from homepage card click (only school_type in URL)
+  useEffect(() => {
+    if (hasOnlySchoolType) {
+      setKeyword("");
+      setOwnershipType("");
+    }
+  }, [urlSchoolType, urlKeyword, urlOwnershipType]);
 
   useEffect(() => {
     const params: SchoolListParams = {

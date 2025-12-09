@@ -1,4 +1,5 @@
 import { Link, Route, Routes } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { HomePage } from "./pages/HomePage";
 import { KindergartenListPage } from "./pages/KindergartenListPage";
 import { KindergartenDetailPage } from "./pages/KindergartenDetailPage";
@@ -6,8 +7,12 @@ import { SchoolListPage } from "./pages/SchoolListPage";
 import { SchoolDetailPage } from "./pages/SchoolDetailPage";
 import { UniversityListPage } from "./pages/UniversityListPage";
 import { UniversityDetailPage } from "./pages/UniversityDetailPage";
+import { LoginPage } from "./pages/LoginPage";
+import { LanguageSelector } from "./components/LanguageSelector";
 
 function App() {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
       <header className="border-b border-slate-200 bg-white/80 backdrop-blur">
@@ -17,22 +22,23 @@ function App() {
               K
             </span>
             <span className="text-lg font-semibold text-slate-900">
-              KiwiSchools
+              {t("appName")}
             </span>
           </Link>
           <div className="flex items-center gap-3">
-            <button
-              type="button"
+            <Link
+              to="/login"
               className="hidden text-xs font-medium text-slate-600 hover:text-slate-800 md:inline-flex"
             >
-              Sign in
-            </button>
+              {t("signIn")}
+            </Link>
             <button
               type="button"
               className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-xs font-semibold text-slate-700 shadow-sm"
             >
               A
             </button>
+            <LanguageSelector />
           </div>
         </div>
       </header>
@@ -50,6 +56,7 @@ function App() {
             <Route path="/schools/:id" element={<SchoolDetailPage />} />
             <Route path="/universities" element={<UniversityListPage />} />
             <Route path="/universities/:id" element={<UniversityDetailPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </div>
       </main>

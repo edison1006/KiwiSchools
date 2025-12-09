@@ -22,3 +22,5 @@ class SchoolZone(SQLModel, table=True):
 
 
 
+
+

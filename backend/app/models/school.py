@@ -82,3 +82,5 @@ class School(SQLModel, table=True):
 
 
 
+
+

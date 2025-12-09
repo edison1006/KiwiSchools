@@ -1,0 +1,21 @@
+{
+  "appName": "KiwiSchools",
+  "signIn": "ログイン",
+  "discoverSchools": "ニュージーランド各地の学校を発見",
+  "searchPlaceholder": "学校名で検索...",
+  "search": "検索",
+  "loginTitle": "アカウントにログイン",
+  "loginSubtitle": "おかえりなさい！詳細を入力してください。",
+  "email": "メールアドレス",
+  "emailPlaceholder": "you@example.com",
+  "password": "パスワード",
+  "passwordPlaceholder": "パスワードを入力してください",
+  "rememberMe": "ログイン状態を保持",
+  "forgotPassword": "パスワードをお忘れですか？",
+  "login": "ログイン",
+  "loggingIn": "ログイン中...",
+  "noAccount": "アカウントをお持ちでないですか？",
+  "signUp": "新規登録",
+  "loginError": "ログインに失敗しました。認証情報を確認して再試行してください。"
+}
+

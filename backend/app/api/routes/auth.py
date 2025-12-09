@@ -36,7 +36,7 @@ def register(
     """Register a new user."""
     # Check if user already exists
     statement = select(User).where(User.email == user_data.email)
-    existing_user = db.exec(statement).first()
+    existing_user = db.execute(statement).scalar_one_or_none()
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -67,7 +67,7 @@ def login(
     """Login and get access token."""
     # Find user by email
     statement = select(User).where(User.email == form_data.username)
-    user = db.exec(statement).first()
+    user = db.execute(statement).scalar_one_or_none()
     
     if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(
@@ -100,7 +100,7 @@ def login_json(
     """Login with JSON body (alternative to form-based login)."""
     # Find user by email
     statement = select(User).where(User.email == login_data.email)
-    user = db.exec(statement).first()
+    user = db.execute(statement).scalar_one_or_none()
     
     if not user or not verify_password(login_data.password, user.hashed_password):
         raise HTTPException(
@@ -141,7 +141,7 @@ def request_password_reset(
     """Request password reset (sends reset token via email - placeholder)."""
     # Find user by email
     statement = select(User).where(User.email == reset_request.email)
-    user = db.exec(statement).first()
+    user = db.execute(statement).scalar_one_or_none()
     
     if not user:
         # Don't reveal if email exists or not for security

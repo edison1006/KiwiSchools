@@ -1,8 +1,11 @@
 from __future__ import annotations
 
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 from sqlmodel import SQLModel, Field, Relationship
+
+if TYPE_CHECKING:
+    from app.models.zone import SchoolZone
 
 
 class SchoolType(str):
@@ -78,7 +81,8 @@ class School(SQLModel, table=True):
 
     # Zone relationship
     zone_id: Optional[int] = Field(default=None, foreign_key="schoolzone.id")
-    zone: Optional["SchoolZone"] = Relationship(back_populates="schools")
+    # Note: Relationship is defined but may need to be configured after both classes are loaded
+    # zone: Optional["SchoolZone"] = Relationship(back_populates="schools")
 
 
 

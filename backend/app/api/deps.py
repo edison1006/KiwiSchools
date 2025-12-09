@@ -35,7 +35,7 @@ def get_current_user(
     token_data = TokenData(email=email)
     
     statement = select(User).where(User.email == token_data.email)
-    user = db.exec(statement).first()
+    user = db.execute(statement).scalar_one_or_none()
     
     if user is None:
         raise credentials_exception

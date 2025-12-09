@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 from datetime import date
-from typing import Optional, List
+from typing import Optional, TYPE_CHECKING
 
 from sqlmodel import SQLModel, Field, Relationship
+
+if TYPE_CHECKING:
+    from app.models.school import School
 
 
 class SchoolZone(SQLModel, table=True):
@@ -18,7 +21,8 @@ class SchoolZone(SQLModel, table=True):
     median_house_price_currency: str = "NZD"
     last_updated: Optional[date] = None
 
-    schools: List["School"] = Relationship(back_populates="zone")
+    # Note: Relationship is defined but may need to be configured after both classes are loaded
+    # schools: list["School"] = Relationship(back_populates="zone")
 
 
 

@@ -34,7 +34,7 @@ class UserResponse(UserBase):
     is_superuser: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class PasswordResetRequest(BaseModel):

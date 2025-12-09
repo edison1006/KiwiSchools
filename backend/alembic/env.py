@@ -5,7 +5,7 @@ from alembic import context
 
 from app.core.config import get_settings
 from app.db.session import engine
-from app.models import school, zone  # noqa: F401
+from app.models import school, zone, user  # noqa: F401
 from sqlmodel import SQLModel
 
 config = context.config

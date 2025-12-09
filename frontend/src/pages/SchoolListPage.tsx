@@ -55,7 +55,7 @@ export function SchoolListPage() {
       })
       .catch((err: unknown) => {
         const message =
-          err instanceof Error ? err.message : "Failed to load schools";
+          err instanceof Error ? err.message : "Failed To Load Schools";
         setError(message);
       })
       .finally(() => setLoading(false));
@@ -66,11 +66,11 @@ export function SchoolListPage() {
       <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
         <div>
           <h1 className="text-xl font-semibold text-slate-900">
-            Primary, intermediate & secondary schools
+            Primary, Intermediate & Secondary Schools
           </h1>
           <p className="text-xs text-slate-600">
-            Filter by school type, ownership and keyword. Explore school zones and
-            house prices on detail pages.
+            Filter By School Type, Ownership And Keyword. Explore School Zones And
+            House Prices On Detail Pages.
           </p>
         </div>
       </div>
@@ -78,14 +78,14 @@ export function SchoolListPage() {
       <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm md:flex-row md:items-end">
         <div className="flex-1 space-y-1">
           <label className="block text-[11px] font-medium text-slate-600">
-            School type
+            School Type
           </label>
           <select
             value={schoolType}
             onChange={(e) => setSchoolType(e.target.value)}
             className="w-full rounded-lg border border-slate-200 px-2 py-1.5 text-xs"
           >
-            <option value="">All types</option>
+            <option value="">All Types</option>
             {SCHOOL_TYPES.map((t) => (
               <option key={t} value={t}>
                 {t.charAt(0).toUpperCase() + t.slice(1)}
@@ -103,7 +103,7 @@ export function SchoolListPage() {
             onChange={(e) => setOwnershipType(e.target.value)}
             className="w-full rounded-lg border border-slate-200 px-2 py-1.5 text-xs"
           >
-            <option value="">All ownership types</option>
+            <option value="">All Ownership Types</option>
             {OWNERSHIP_TYPES.map((t) => (
               <option key={t} value={t}>
                 {t.replace("_", " ")}
@@ -118,7 +118,7 @@ export function SchoolListPage() {
           </label>
           <input
             type="text"
-            placeholder="Search by name..."
+            placeholder="Search By Name..."
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             className="w-full rounded-lg border border-slate-200 px-2 py-1.5 text-xs"
@@ -131,7 +131,7 @@ export function SchoolListPage() {
         {error && <p className="text-xs text-red-600">{error}</p>}
         {!loading && !error && items.length === 0 && (
           <p className="text-xs text-slate-600">
-            No schools found. Try adjusting filters.
+            No Schools Found. Try Adjusting Filters.
           </p>
         )}
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">

@@ -16,6 +16,10 @@
   "loggingIn": "Kei te takiuru...",
   "noAccount": "Kāore anō koe i te whai pūkete?",
   "signUp": "Rēhita",
-  "loginError": "Kua rawa te takiuru. Tēnā tirohia ō taunaki, ka ngana anō."
+  "loginError": "Kua rawa te takiuru. Tēnā tirohia ō taunaki, ka ngana anō.",
+  "topSchoolsTitle": "Ngā Kura me ngā Whare Wānanga Runga",
+  "topSchoolsDescription": "Kimihia ngā whare ako matua o Aotearoa. Tirohia ngā kura tino pai, ngā whare wānanga rongonui, me ngā taiao ako whakahirahira.",
+  "exploreTopSchools": "Tirohia ngā Kura Runga",
+  "mapMode": "Matawhenua"
 }
 

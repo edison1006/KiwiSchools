@@ -8,6 +8,7 @@ import { SchoolDetailPage } from "./pages/SchoolDetailPage";
 import { UniversityListPage } from "./pages/UniversityListPage";
 import { UniversityDetailPage } from "./pages/UniversityDetailPage";
 import { LoginPage } from "./pages/LoginPage";
+import { MapPage } from "./pages/MapPage";
 import { LanguageSelector } from "./components/LanguageSelector";
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
             <Route path="/universities" element={<UniversityListPage />} />
             <Route path="/universities/:id" element={<UniversityDetailPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/map" element={<MapPage />} />
           </Routes>
         </div>
       </main>

@@ -7,12 +7,12 @@ interface Props {
 
 export function SchoolCard({ school }: Props) {
   const tuition =
-    school.tuition_domestic_min || school.tuition_domestic_max
-      ? `NZD ${school.tuition_domestic_min?.toLocaleString() ?? "?"}${
-          school.tuition_domestic_max
-            ? ` - ${school.tuition_domestic_max.toLocaleString()}`
+    school.tuition_min || school.tuition_max
+      ? `${school.tuition_currency ?? "NZD"} ${school.tuition_min?.toLocaleString() ?? "?"}${
+          school.tuition_max
+            ? ` - ${school.tuition_max.toLocaleString()}`
             : ""
-        } / year (domestic)`
+        } / year`
       : "Tuition info not available";
 
   const zoneText =
@@ -39,9 +39,9 @@ export function SchoolCard({ school }: Props) {
             </Link>
           </h2>
           <p className="text-[11px] text-slate-500">
-            {school.ownership_type
-              ? school.ownership_type.replace("_", " ")
-              : "School"}
+            {school.sector
+              ? school.sector.replace("_", " ")
+              : school.city || "School"}
           </p>
         </div>
         <span className="inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium capitalize text-slate-700">
@@ -49,10 +49,16 @@ export function SchoolCard({ school }: Props) {
         </span>
       </header>
       <div className="space-y-1 text-xs text-slate-600">
-        {school.education_system && (
+        {school.education_systems && (
           <p>
             <span className="font-medium">Curriculum:</span>{" "}
-            {school.education_system}
+            {school.education_systems}
+          </p>
+        )}
+        {school.curriculum && (
+          <p>
+            <span className="font-medium">Curriculum:</span>{" "}
+            {school.curriculum}
           </p>
         )}
         <p>{tuition}</p>

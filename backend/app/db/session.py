@@ -23,7 +23,7 @@ def get_db() -> Generator:
 
 def init_db() -> None:
     # Import models so SQLModel metadata is populated
-    from app.models import school, zone  # noqa: F401
+    from app.models import school, zone, user  # noqa: F401
 
     SQLModel.metadata.create_all(bind=engine)
 

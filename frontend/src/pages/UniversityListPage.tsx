@@ -49,7 +49,7 @@ export function UniversityListPage() {
       .then(setItems)
       .catch((err: unknown) => {
         const message =
-          err instanceof Error ? err.message : "Failed to load universities";
+          err instanceof Error ? err.message : "Failed To Load Universities";
         setError(message);
       })
       .finally(() => setLoading(false));
@@ -60,11 +60,11 @@ export function UniversityListPage() {
       <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
         <div>
           <h1 className="text-xl font-semibold text-slate-900">
-            Universities & institutes of technology
+            Universities & Institutes Of Technology
           </h1>
           <p className="text-xs text-slate-600">
-            Filter by city and type, then explore QS rankings, strong subjects and
-            tuition ranges.
+            Filter By City And Type, Then Explore QS Rankings, Strong Subjects And
+            Tuition Ranges.
           </p>
         </div>
       </div>
@@ -78,7 +78,7 @@ export function UniversityListPage() {
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            placeholder="e.g. Auckland"
+            placeholder="E.g. Auckland"
             className="w-full rounded-lg border border-slate-200 px-2 py-1.5 text-xs"
           />
         </div>
@@ -92,10 +92,10 @@ export function UniversityListPage() {
             onChange={(e) => setType(e.target.value)}
             className="w-full rounded-lg border border-slate-200 px-2 py-1.5 text-xs"
           >
-            <option value="">All types</option>
+            <option value="">All Types</option>
             <option value="university">University</option>
             <option value="institute_of_technology">
-              Institute of technology
+              Institute Of Technology
             </option>
             <option value="private">Private</option>
           </select>
@@ -109,7 +109,7 @@ export function UniversityListPage() {
             type="text"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
-            placeholder="Search by name..."
+            placeholder="Search By Name..."
             className="w-full rounded-lg border border-slate-200 px-2 py-1.5 text-xs"
           />
         </div>
@@ -120,7 +120,7 @@ export function UniversityListPage() {
         {error && <p className="text-xs text-red-600">{error}</p>}
         {!loading && !error && items.length === 0 && (
           <p className="text-xs text-slate-600">
-            No universities found. Try adjusting filters.
+            No Universities Found. Try Adjusting Filters.
           </p>
         )}
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">

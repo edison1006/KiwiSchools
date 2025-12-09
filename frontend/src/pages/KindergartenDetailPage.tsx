@@ -17,7 +17,7 @@ export function KindergartenDetailPage() {
       .then(setData)
       .catch((err: unknown) => {
         const message =
-          err instanceof Error ? err.message : "Failed to load kindergarten";
+          err instanceof Error ? err.message : "Failed To Load Kindergarten";
         setError(message);
       })
       .finally(() => setLoading(false));
@@ -32,7 +32,7 @@ export function KindergartenDetailPage() {
   }
 
   if (!data) {
-    return <p className="text-xs text-slate-600">Kindergarten not found.</p>;
+    return <p className="text-xs text-slate-600">Kindergarten Not Found.</p>;
   }
 
   const feeText =
@@ -44,7 +44,7 @@ export function KindergartenDetailPage() {
         }${
           data.fee_unit ? ` / ${data.fee_unit.replace("per_", "")}` : ""
         }`
-      : "Fee info not available";
+      : "Fee Info Not Available";
 
   return (
     <div className="space-y-4">
@@ -52,7 +52,7 @@ export function KindergartenDetailPage() {
         to="/kindergartens"
         className="inline-flex items-center text-xs text-slate-600 hover:text-slate-800"
       >
-        ← Back to kindergartens
+        ← Back To Kindergartens
       </Link>
 
       <header className="space-y-1">
@@ -74,7 +74,7 @@ export function KindergartenDetailPage() {
           </h2>
           {data.owner_or_group && (
             <p className="text-xs text-slate-600">
-              <span className="font-medium">Owner / group:</span>{" "}
+              <span className="font-medium">Owner / Group:</span>{" "}
               {data.owner_or_group}
             </p>
           )}
@@ -85,10 +85,10 @@ export function KindergartenDetailPage() {
 
         <div className="space-y-2 rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
           <h2 className="text-xs font-semibold text-slate-800">
-            Fees & contact
+            Fees & Contact
           </h2>
           <p className="text-xs text-slate-600">
-            <span className="font-medium">Estimated fees:</span> {feeText}
+            <span className="font-medium">Estimated Fees:</span> {feeText}
           </p>
           {data.address && (
             <p className="text-xs text-slate-600">
@@ -113,7 +113,7 @@ export function KindergartenDetailPage() {
                 rel="noreferrer"
                 className="text-xs font-medium text-emerald-700 hover:text-emerald-800"
               >
-                Visit website
+                Visit Website
               </a>
             </p>
           )}

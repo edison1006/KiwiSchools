@@ -16,6 +16,10 @@
   "loggingIn": "登录中...",
   "noAccount": "还没有账户？",
   "signUp": "注册",
-  "loginError": "登录失败。请检查您的凭据后重试。"
+  "loginError": "登录失败。请检查您的凭据后重试。",
+  "topSchoolsTitle": "名校与顶尖大学",
+  "topSchoolsDescription": "探索新西兰领先的教育机构。发现排名靠前的学校、知名大学和卓越的学习环境。",
+  "exploreTopSchools": "探索名校",
+  "mapMode": "地图模式"
 }
 

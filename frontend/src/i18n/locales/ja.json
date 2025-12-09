@@ -16,6 +16,10 @@
   "loggingIn": "ログイン中...",
   "noAccount": "アカウントをお持ちでないですか？",
   "signUp": "新規登録",
-  "loginError": "ログインに失敗しました。認証情報を確認して再試行してください。"
+  "loginError": "ログインに失敗しました。認証情報を確認して再試行してください。",
+  "topSchoolsTitle": "名門校と大学",
+  "topSchoolsDescription": "ニュージーランドの主要な教育機関を発見しましょう。トップランクの学校、名門大学、優れた学習環境を探索してください。",
+  "exploreTopSchools": "名門校を探索",
+  "mapMode": "地図モード"
 }
 

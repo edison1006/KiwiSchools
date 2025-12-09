@@ -17,7 +17,7 @@ export function SchoolDetailPage() {
       .then(setData)
       .catch((err: unknown) => {
         const message =
-          err instanceof Error ? err.message : "Failed to load school";
+          err instanceof Error ? err.message : "Failed To Load School";
         setError(message);
       })
       .finally(() => setLoading(false));
@@ -32,7 +32,7 @@ export function SchoolDetailPage() {
   }
 
   if (!data) {
-    return <p className="text-xs text-slate-600">School not found.</p>;
+    return <p className="text-xs text-slate-600">School Not Found.</p>;
   }
 
   const tuitionDomestic =
@@ -42,7 +42,7 @@ export function SchoolDetailPage() {
             ? ` - ${data.tuition_domestic_max.toLocaleString()}`
             : ""
         } / year`
-      : "Not available";
+      : "Not Available";
 
   const tuitionIntl =
     data.tuition_international_min || data.tuition_international_max
@@ -51,7 +51,7 @@ export function SchoolDetailPage() {
             ? ` - ${data.tuition_international_max.toLocaleString()}`
             : ""
         } / year`
-      : "Not available";
+      : "Not Available";
 
   return (
     <div className="space-y-4">
@@ -59,7 +59,7 @@ export function SchoolDetailPage() {
         to="/schools"
         className="inline-flex items-center text-xs text-slate-600 hover:text-slate-800"
       >
-        ← Back to schools
+        ← Back To Schools
       </Link>
 
       <header className="space-y-1">
@@ -98,7 +98,7 @@ export function SchoolDetailPage() {
                 rel="noreferrer"
                 className="font-medium text-emerald-700 hover:text-emerald-800"
               >
-                Visit school website
+                Visit School Website
               </a>
             </p>
           )}
@@ -106,7 +106,7 @@ export function SchoolDetailPage() {
 
         <div className="space-y-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
           <h2 className="text-xs font-semibold text-slate-800">
-            Tuition (per year)
+            Tuition (Per Year)
           </h2>
           <p className="text-xs text-slate-600">
             <span className="font-medium">Domestic:</span> {tuitionDomestic}
@@ -132,9 +132,9 @@ function SchoolZoneInfo({ school }: { school: School }) {
     return (
       <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
         <h2 className="text-xs font-semibold text-slate-800">
-          School zone & house prices
+          School Zone & House Prices
         </h2>
-        <p className="text-xs text-slate-600">No zone information available.</p>
+        <p className="text-xs text-slate-600">No Zone Information Available.</p>
       </div>
     );
   }
@@ -142,7 +142,7 @@ function SchoolZoneInfo({ school }: { school: School }) {
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
       <h2 className="text-xs font-semibold text-slate-800">
-        School zone & house prices
+        School Zone & House Prices
       </h2>
       <div className="mt-1 space-y-1 text-xs text-slate-600">
         <p>
@@ -150,21 +150,21 @@ function SchoolZoneInfo({ school }: { school: School }) {
         </p>
         {zone.avg_house_price && (
           <p>
-            <span className="font-medium">Average house price:</span>{" "}
+            <span className="font-medium">Average House Price:</span>{" "}
             {zone.median_house_price_currency ?? "NZD"}{" "}
             {zone.avg_house_price.toLocaleString()}
           </p>
         )}
         {zone.median_house_price && (
           <p>
-            <span className="font-medium">Median house price:</span>{" "}
+            <span className="font-medium">Median House Price:</span>{" "}
             {zone.median_house_price_currency ?? "NZD"}{" "}
             {zone.median_house_price.toLocaleString()}
           </p>
         )}
         {zone.last_updated && (
           <p>
-            <span className="font-medium">Last updated:</span>{" "}
+            <span className="font-medium">Last Updated:</span>{" "}
             {new Date(zone.last_updated).toLocaleDateString()}
           </p>
         )}
@@ -176,7 +176,7 @@ function SchoolZoneInfo({ school }: { school: School }) {
               rel="noreferrer"
               className="font-medium text-emerald-700 hover:text-emerald-800"
             >
-              View data source
+              View Data Source
             </a>
           </p>
         )}
@@ -191,11 +191,11 @@ function SchoolStatsTable({ school }: { school: School }) {
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
       <h2 className="text-xs font-semibold text-slate-800">
-        Progression & rankings (last 3 years)
+        Progression & Rankings (Last 3 Years)
       </h2>
       {stats.length === 0 ? (
         <p className="mt-1 text-xs text-slate-600">
-          No recent stats available.
+          No Recent Stats Available.
         </p>
       ) : (
         <div className="mt-2 overflow-hidden rounded-lg border border-slate-200">
@@ -206,7 +206,7 @@ function SchoolStatsTable({ school }: { school: School }) {
                   Year
                 </th>
                 <th className="px-2 py-1 text-left font-medium text-slate-600">
-                  Progression rate
+                  Progression Rate
                 </th>
                 <th className="px-2 py-1 text-left font-medium text-slate-600">
                   Ranking

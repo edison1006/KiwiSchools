@@ -59,14 +59,20 @@ export interface Kindergarten {
   name: string;
   brand_name?: string | null;
   owner_or_group?: string | null;
+  owner?: string | null; // Backend uses 'owner'
   description?: string | null;
   education_system?: string | null;
+  education_systems?: string | null; // Backend uses 'education_systems'
   fee_min?: number | null;
   fee_max?: number | null;
   fee_currency?: string | null;
   fee_unit?: string | null;
   website_url?: string | null;
+  website?: string | null; // Backend uses 'website'
   address?: string | null;
+  region?: string | null; // Backend provides region
+  city?: string | null; // Backend provides city
+  suburb?: string | null; // Backend provides suburb
   region_id?: number | null;
   latitude?: number | null;
   longitude?: number | null;

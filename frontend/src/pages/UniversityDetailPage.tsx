@@ -17,7 +17,7 @@ export function UniversityDetailPage() {
       .then(setData)
       .catch((err: unknown) => {
         const message =
-          err instanceof Error ? err.message : "Failed to load university";
+          err instanceof Error ? err.message : "Failed To Load University";
         setError(message);
       })
       .finally(() => setLoading(false));
@@ -32,7 +32,7 @@ export function UniversityDetailPage() {
   }
 
   if (!data) {
-    return <p className="text-xs text-slate-600">University not found.</p>;
+    return <p className="text-xs text-slate-600">University Not Found.</p>;
   }
 
   const tuitionDomestic =
@@ -42,7 +42,7 @@ export function UniversityDetailPage() {
             ? ` - ${data.tuition_domestic_max.toLocaleString()}`
             : ""
         } / year`
-      : "Not available";
+      : "Not Available";
 
   const tuitionIntl =
     data.tuition_international_min || data.tuition_international_max
@@ -51,7 +51,7 @@ export function UniversityDetailPage() {
             ? ` - ${data.tuition_international_max.toLocaleString()}`
             : ""
         } / year`
-      : "Not available";
+      : "Not Available";
 
   return (
     <div className="space-y-4">
@@ -59,7 +59,7 @@ export function UniversityDetailPage() {
         to="/universities"
         className="inline-flex items-center text-xs text-slate-600 hover:text-slate-800"
       >
-        ← Back to universities
+        ← Back To Universities
       </Link>
 
       <header className="space-y-1">
@@ -87,7 +87,7 @@ export function UniversityDetailPage() {
           )}
           {data.strong_subjects && (
             <div className="text-xs text-slate-600">
-              <p className="font-medium">Strong subjects</p>
+              <p className="font-medium">Strong Subjects</p>
               <p>{data.strong_subjects}</p>
             </div>
           )}
@@ -99,7 +99,7 @@ export function UniversityDetailPage() {
                 rel="noreferrer"
                 className="font-medium text-emerald-700 hover:text-emerald-800"
               >
-                Visit university website
+                Visit University Website
               </a>
             </p>
           )}
@@ -107,7 +107,7 @@ export function UniversityDetailPage() {
 
         <div className="space-y-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
           <h2 className="text-xs font-semibold text-slate-800">
-            Tuition (per year)
+            Tuition (Per Year)
           </h2>
           <p className="text-xs text-slate-600">
             <span className="font-medium">Domestic:</span> {tuitionDomestic}

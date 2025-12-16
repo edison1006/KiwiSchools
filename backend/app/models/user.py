@@ -17,3 +17,4 @@ class User(SQLModel, table=True):
     updated_at: Optional[datetime] = None
 
 
+

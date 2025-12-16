@@ -58,3 +58,4 @@ export function UniversityCard({ university }: Props) {
 
 
 
+

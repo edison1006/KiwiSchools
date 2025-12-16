@@ -22,64 +22,56 @@ const SCHOOL_TYPE_CARDS = [
     title: "Early childhood / Kindergarten",
     description: "Montessori, Reggio Emilia, play-based and bilingual centres.",
     to: "/kindergartens",
-    bg: "bg-gradient-to-br from-amber-100 via-orange-50 to-rose-100",
-    emoji: "🧸"
+    bg: "bg-gradient-to-br from-amber-100 via-orange-50 to-rose-100"
   },
   {
     key: "primary",
     title: "Primary schools",
     description: "Years 1–6, local primary schools across New Zealand.",
     to: "/schools?school_type=primary",
-    bg: "bg-gradient-to-br from-sky-100 via-cyan-50 to-emerald-100",
-    emoji: "📚"
+    bg: "bg-gradient-to-br from-sky-100 via-cyan-50 to-emerald-100"
   },
   {
     key: "intermediate",
     title: "Intermediate schools",
     description: "Years 7–8, bridging primary and secondary years.",
     to: "/schools?school_type=intermediate",
-    bg: "bg-gradient-to-br from-indigo-100 via-slate-50 to-sky-100",
-    emoji: "🧑‍🎓"
+    bg: "bg-gradient-to-br from-indigo-100 via-slate-50 to-sky-100"
   },
   {
     key: "secondary",
     title: "Secondary schools",
     description: "NCEA, IB and Cambridge secondary schools (Years 9–13).",
     to: "/schools?school_type=secondary",
-    bg: "bg-gradient-to-br from-purple-100 via-fuchsia-50 to-rose-100",
-    emoji: "🏫"
+    bg: "bg-gradient-to-br from-purple-100 via-fuchsia-50 to-rose-100"
   },
   {
     key: "composite",
     title: "Composite schools",
     description: "Years 1–13 in one school, including area schools.",
     to: "/schools?school_type=composite",
-    bg: "bg-gradient-to-br from-emerald-100 via-lime-50 to-sky-100",
-    emoji: "🌈"
+    bg: "bg-gradient-to-br from-emerald-100 via-lime-50 to-sky-100"
   },
   {
     key: "university",
     title: "Universities",
     description: "NZ universities including the eight major universities.",
     to: "/universities?university_type=university",
-    bg: "bg-gradient-to-br from-blue-100 via-slate-50 to-indigo-100",
-    emoji: "🎓"
+    bg: "bg-gradient-to-br from-blue-100 via-slate-50 to-indigo-100"
   },
   {
     key: "institute",
     title: "Institutes of technology",
     description: "Applied and vocational programmes at institutes of technology.",
     to: "/universities?university_type=institute_of_technology",
-    bg: "bg-gradient-to-br from-teal-100 via-emerald-50 to-cyan-100",
-    emoji: "🔧"
+    bg: "bg-gradient-to-br from-teal-100 via-emerald-50 to-cyan-100"
   },
   {
     key: "private_tertiary",
     title: "Private tertiary providers",
     description: "Specialised private training establishments and colleges.",
     to: "/universities?university_type=private",
-    bg: "bg-gradient-to-br from-pink-100 via-rose-50 to-amber-100",
-    emoji: "⭐"
+    bg: "bg-gradient-to-br from-pink-100 via-rose-50 to-amber-100"
   }
 ];
 
@@ -262,19 +254,6 @@ export function HomePage() {
                 {t("exploreTopSchools")}
               </button>
             </div>
-            <div className="hidden md:block">
-              <div className="flex gap-2">
-                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
-                  <span className="text-3xl">🏆</span>
-                </div>
-                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
-                  <span className="text-3xl">⭐</span>
-                </div>
-                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
-                  <span className="text-3xl">🎓</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -287,7 +266,6 @@ export function HomePage() {
             description={card.description}
             to={card.to}
             bgClass={card.bg}
-            emoji={card.emoji}
           />
         ))}
       </section>
@@ -346,10 +324,9 @@ interface HomeCardProps {
   description: string;
   to: string;
   bgClass: string;
-  emoji: string;
 }
 
-function HomeCard({ title, description, to, bgClass, emoji }: HomeCardProps) {
+function HomeCard({ title, description, to, bgClass }: HomeCardProps) {
   const navigate = useNavigate();
   return (
     <button
@@ -357,12 +334,7 @@ function HomeCard({ title, description, to, bgClass, emoji }: HomeCardProps) {
       onClick={() => navigate(to)}
       className={`group flex h-full flex-col justify-between rounded-2xl p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${bgClass}`}
     >
-      <div className="flex items-center justify-between gap-2">
-        <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
-        <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-white/70 text-lg">
-          {emoji}
-        </span>
-      </div>
+      <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
       <p className="mt-2 text-xs text-slate-700">{description}</p>
     </button>
   );

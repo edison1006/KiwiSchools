@@ -252,3 +252,4 @@ def seed_kindergartens():
 if __name__ == "__main__":
     seed_kindergartens()
 
+

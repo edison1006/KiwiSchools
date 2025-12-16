@@ -41,3 +41,4 @@ echo "API docs will be available at: http://localhost:$PORT/docs"
 echo ""
 .venv/bin/uvicorn app.main:app --reload --port $PORT
 
+

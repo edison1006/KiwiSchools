@@ -40,3 +40,4 @@ def get_available_sources() -> List[Dict[str, Any]]:
     """Get list of available data sources."""
     return NZ_DATA_SOURCES
 
+

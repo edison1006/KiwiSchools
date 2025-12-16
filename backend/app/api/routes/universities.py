@@ -52,3 +52,4 @@ def get_university(
         raise HTTPException(status_code=404, detail="University not found")
     return university
 
+

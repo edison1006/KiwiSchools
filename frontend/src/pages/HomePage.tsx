@@ -1,15 +1,6 @@
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { fetchSchools } from "../api/schoolApi";
-import { fetchKindergartens } from "../api/kindergartenApi";
-import { fetchUniversities } from "../api/universityApi";
-import type { School } from "../types";
-import type { Kindergarten } from "../types";
-import type { University } from "../types";
-import { SchoolCard } from "../components/SchoolCard";
-import { KindergartenCard } from "../components/KindergartenCard";
-import { UniversityCard } from "../components/UniversityCard";
 
 const QUICK_CITIES_BY_ISLAND = {
   north: ["Auckland", "Hamilton", "Tauranga", "Wellington"],
@@ -79,29 +70,6 @@ export function HomePage() {
   const { t } = useTranslation();
   const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
-  const [allSchools, setAllSchools] = useState<School[]>([]);
-  const [allKindergartens, setAllKindergartens] = useState<Kindergarten[]>([]);
-  const [allUniversities, setAllUniversities] = useState<University[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  // Load all schools on component mount
-  useEffect(() => {
-    setLoading(true);
-    Promise.all([
-      fetchSchools({ page_size: 12 }).catch(() => ({ items: [] })),
-      fetchKindergartens({ page_size: 8 }).catch(() => ({ items: [] })),
-      fetchUniversities({}).catch(() => [])
-    ])
-      .then(([schoolsData, kindergartensData, universitiesData]) => {
-        setAllSchools(schoolsData.items || []);
-        setAllKindergartens(kindergartensData.items || []);
-        setAllUniversities(universitiesData || []);
-      })
-      .catch(() => {
-        // Fail silently
-      })
-      .finally(() => setLoading(false));
-  }, []);
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -162,72 +130,6 @@ export function HomePage() {
           </form>
         </div>
       </section>
-
-      {/* All Schools Section */}
-      {(allSchools.length > 0 || allKindergartens.length > 0 || allUniversities.length > 0) && (
-        <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-slate-900">
-              All Schools Across New Zealand
-            </h2>
-            <button
-              type="button"
-              onClick={() => navigate("/schools")}
-              className="text-xs font-medium text-emerald-600 hover:text-emerald-700"
-            >
-              View All →
-            </button>
-          </div>
-
-          {loading ? (
-            <p className="text-xs text-slate-600">Loading...</p>
-          ) : (
-            <div className="space-y-6">
-              {/* Kindergartens */}
-              {allKindergartens.length > 0 && (
-                <div>
-                  <h3 className="mb-3 text-sm font-medium text-slate-800">
-                    Kindergartens ({allKindergartens.length})
-                  </h3>
-                  <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-                    {allKindergartens.slice(0, 4).map((k) => (
-                      <KindergartenCard key={k.id} kindergarten={k} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Schools */}
-              {allSchools.length > 0 && (
-                <div>
-                  <h3 className="mb-3 text-sm font-medium text-slate-800">
-                    Schools ({allSchools.length})
-                  </h3>
-                  <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-                    {allSchools.slice(0, 8).map((s) => (
-                      <SchoolCard key={s.id} school={s} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Universities */}
-              {allUniversities.length > 0 && (
-                <div>
-                  <h3 className="mb-3 text-sm font-medium text-slate-800">
-                    Universities ({allUniversities.length})
-                  </h3>
-                  <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-                    {allUniversities.slice(0, 4).map((u) => (
-                      <UniversityCard key={u.id} university={u} />
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </section>
-      )}
 
       <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600 shadow-xl">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-700/50 via-teal-700/50 to-cyan-700/50"></div>

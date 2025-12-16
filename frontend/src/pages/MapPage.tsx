@@ -14,6 +14,16 @@ const MAP_CONTAINER_STYLE = {
   width: "100%"
 } as const;
 
+// Custom blue circle marker icon - creates a blue dot with white border
+const BLUE_MARKER_ICON = {
+  path: google.maps.SymbolPath.CIRCLE,
+  scale: 10,
+  fillColor: "#4285F4", // Google Blue
+  fillOpacity: 1,
+  strokeColor: "#FFFFFF",
+  strokeWeight: 2,
+};
+
 // North Island cities
 const NORTH_ISLAND_CITIES = [
   "Auckland",
@@ -426,10 +436,20 @@ export function MapPage() {
           >
             {schools.map((school) => {
               if (!school.latitude || !school.longitude) return null;
+              // Create blue circle icon
+              const blueIcon = {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 10,
+                fillColor: "#4285F4", // Google Blue
+                fillOpacity: 1,
+                strokeColor: "#FFFFFF",
+                strokeWeight: 2,
+              };
               return (
                 <Marker
                   key={school.id}
                   position={{ lat: school.latitude, lng: school.longitude }}
+                  icon={blueIcon}
                   onClick={() => setSelectedSchool(school)}
                 />
               );

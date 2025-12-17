@@ -17,24 +17,14 @@ export interface PaginatedSchools {
   page_size: number;
 }
 
-export async function fetchSchools(params: SchoolListParams & { region?: string; city?: string }): Promise<PaginatedSchools> {
-  const queryParams: Record<string, string> = {};
-  
-  if (params.school_type) {
-    queryParams.school_type = params.school_type;
-  }
-  if (params.keyword) {
-    queryParams.name = params.keyword; // Backend uses 'name' parameter
-  }
-  if (params.region) {
-    queryParams.region = params.region;
-  }
-  if (params.city) {
-    queryParams.city = params.city;
-  }
-
+export async function fetchSchools(params: SchoolListParams): Promise<PaginatedSchools> {
   const response = await apiClient.get<School[]>("/schools", {
-    params: queryParams
+    params: {
+      school_type: params.school_type,
+      name: params.keyword, // Backend uses 'name' parameter
+      city: undefined, // Not used in current implementation
+      region: undefined, // Not used in current implementation
+    }
   });
   // Convert List response to PaginatedSchools format
   return {

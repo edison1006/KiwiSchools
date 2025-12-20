@@ -58,3 +58,4 @@ def get_kindergarten(
         raise HTTPException(status_code=404, detail="Kindergarten not found")
     return kindergarten
 
+

@@ -124,42 +124,6 @@ const CITY_COORDINATES: Record<string, { lat: number; lng: number; zoom: number 
   Balclutha: { lat: -46.2333, lng: 169.7500, zoom: 12 }
 };
 
-// Component to handle map search
-function MapSearch({ onSearch }: { onSearch: (keyword: string) => void }) {
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const { t } = useTranslation();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchKeyword.trim()) {
-      onSearch(searchKeyword.trim());
-    }
-  };
-
-  return (
-    <form
-      onSubmit={handleSearch}
-      className="absolute left-4 top-4 z-[1000] w-64 rounded-lg border border-slate-200 bg-white shadow-lg"
-    >
-      <div className="flex items-center gap-2 p-2">
-        <input
-          type="text"
-          placeholder={t("searchPlaceholder")}
-          value={searchKeyword}
-          onChange={(e) => setSearchKeyword(e.target.value)}
-          className="flex-1 border-none bg-transparent text-sm outline-none placeholder:text-slate-400"
-        />
-        <button
-          type="submit"
-          className="rounded-md bg-emerald-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-600"
-        >
-          {t("search")}
-        </button>
-      </div>
-    </form>
-  );
-}
-
 export function MapPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -168,6 +132,13 @@ export function MapPage() {
   const [error, setError] = useState<string | null>(null);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
+
+  // Filters
+  const [schoolType, setSchoolType] = useState<string>("");
+  const [island, setIsland] = useState<"" | "north" | "south">("");
+  const [cityFilter, setCityFilter] = useState<string>("");
+  const [educationSystem, setEducationSystem] = useState<string>("");
+
   const mapRef = useRef<any>(null);
 
   const { isLoaded, loadError } = useJsApiLoader({
@@ -203,13 +174,41 @@ export function MapPage() {
     loadInitialSchools();
   }, []);
 
-  // Handle search
   const handleSearch = async (keyword: string) => {
     setSearchKeyword(keyword);
     setLoading(true);
     try {
-      const data = await fetchSchools({ keyword });
-      const withCoords = data.items.filter((s) => s.latitude && s.longitude);
+      const data = await fetchSchools({
+        keyword: keyword || undefined,
+        school_type: schoolType || undefined
+      });
+
+      // Only show schools that have coordinates
+      let withCoords = data.items.filter((s) => s.latitude && s.longitude);
+
+      // City filter (frontend-side for now)
+      if (cityFilter) {
+        withCoords = withCoords.filter(
+          (s) => s.city && s.city.toLowerCase() === cityFilter.toLowerCase()
+        );
+      }
+
+      // Education system filter (mainly for kindergartens)
+      if (educationSystem) {
+        withCoords = withCoords.filter((s) => {
+          const value = (s as any).education_system as string | undefined;
+          if (!value) return false;
+          if (educationSystem === "other") {
+            return (
+              !["montessori", "reggio emilia", "play-based", "bilingual"].some((k) =>
+                value.toLowerCase().includes(k)
+              )
+            );
+          }
+          return value.toLowerCase().includes(educationSystem.toLowerCase());
+        });
+      }
+
       setSchools(withCoords);
 
       // If schools found, zoom to first result
@@ -265,6 +264,185 @@ export function MapPage() {
         </Link>
       </div>
 
+      {/* Search & quick actions */}
+      <section className="space-y-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (searchKeyword.trim()) {
+              void handleSearch(searchKeyword.trim());
+            }
+          }}
+          className="flex flex-col gap-2 md:flex-row md:items-center"
+        >
+          <div className="flex-1">
+            <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-sm">
+              <input
+                type="text"
+                placeholder={t("searchPlaceholder")}
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+                className="flex-1 border-none bg-transparent text-sm outline-none placeholder:text-slate-400"
+              />
+              <button
+                type="submit"
+                className="rounded-full bg-emerald-500 px-4 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-emerald-600"
+              >
+                {t("search")}
+              </button>
+            </div>
+          </div>
+          <p className="text-[11px] text-slate-500 md:text-right">
+            Tip: Search by school name, or use the quick city buttons below to explore different areas.
+          </p>
+        </form>
+
+        {/* Filters: school type / region / city / education system */}
+        <div className="grid gap-3 md:grid-cols-4">
+          <div className="space-y-1">
+            <label className="text-[11px] font-medium text-slate-700">
+              School type
+            </label>
+            <select
+              value={schoolType}
+              onChange={(e) => {
+                setSchoolType(e.target.value);
+                void handleSearch(searchKeyword.trim());
+              }}
+              className="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-800 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            >
+              <option value="">All types</option>
+              <option value="kindergarten">Kindergarten / ECE</option>
+              <option value="primary">Primary</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="secondary">Secondary</option>
+              <option value="composite">Composite</option>
+              <option value="university">University</option>
+              <option value="institute_of_technology">Institute of Technology</option>
+              <option value="private_tertiary">Private tertiary</option>
+            </select>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[11px] font-medium text-slate-700">
+              Region (island)
+            </label>
+            <select
+              value={island}
+              onChange={(e) => {
+                const value = e.target.value as "" | "north" | "south";
+                setIsland(value);
+                // Reset city when changing region
+                setCityFilter("");
+                void handleSearch(searchKeyword.trim());
+              }}
+              className="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-800 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            >
+              <option value="">All regions</option>
+              <option value="north">North Island</option>
+              <option value="south">South Island</option>
+            </select>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[11px] font-medium text-slate-700">
+              City
+            </label>
+            <select
+              value={cityFilter}
+              onChange={(e) => {
+                setCityFilter(e.target.value);
+                void handleSearch(searchKeyword.trim());
+              }}
+              disabled={!island}
+              className="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-800 outline-none disabled:bg-slate-50 disabled:text-slate-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            >
+              <option value="">All cities</option>
+              {(island === "north" ? NORTH_ISLAND_CITIES : island === "south" ? SOUTH_ISLAND_CITIES : []).map(
+                (city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                )
+              )}
+            </select>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-[11px] font-medium text-slate-700">
+              Education system
+            </label>
+            <select
+              value={educationSystem}
+              onChange={(e) => {
+                setEducationSystem(e.target.value);
+                void handleSearch(searchKeyword.trim());
+              }}
+              className="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-800 outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            >
+              <option value="">All systems</option>
+              <option value="Montessori">Montessori</option>
+              <option value="Reggio Emilia">Reggio Emilia</option>
+              <option value="play-based">Play-based</option>
+              <option value="bilingual">Bilingual</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Quick city zoom */}
+        <div className="grid gap-3 md:grid-cols-2">
+          <div>
+            <h3 className="mb-1 text-[11px] font-semibold text-slate-800">
+              North Island
+            </h3>
+            <div className="flex flex-wrap gap-1.5">
+              {["Auckland", "Hamilton", "Tauranga", "Wellington"].map((city) => (
+                <button
+                  key={city}
+                  type="button"
+                  onClick={() => {
+                    const coords = CITY_COORDINATES[city];
+                    if (coords && mapRef.current) {
+                      mapRef.current.panTo({ lat: coords.lat, lng: coords.lng });
+                      mapRef.current.setZoom(coords.zoom);
+                    }
+                    void handleSearch(city);
+                  }}
+                  className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-medium text-slate-700 hover:border-emerald-400 hover:text-emerald-700"
+                >
+                  {city}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="mb-1 text-[11px] font-semibold text-slate-800">
+              South Island
+            </h3>
+            <div className="flex flex-wrap gap-1.5">
+              {["Christchurch", "Dunedin", "Nelson", "Queenstown"].map((city) => (
+                <button
+                  key={city}
+                  type="button"
+                  onClick={() => {
+                    const coords = CITY_COORDINATES[city];
+                    if (coords && mapRef.current) {
+                      mapRef.current.panTo({ lat: coords.lat, lng: coords.lng });
+                      mapRef.current.setZoom(coords.zoom);
+                    }
+                    void handleSearch(city);
+                  }}
+                  className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-medium text-slate-700 hover:border-emerald-400 hover:text-emerald-700"
+                >
+                  {city}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {error && (
         <div className="rounded-lg border border-amber-200 bg-amber-50 p-3">
           <div className="flex items-start gap-2">
@@ -309,7 +487,6 @@ export function MapPage() {
         )}
         {isLoaded && !loadError && (
           <>
-            <MapSearch onSearch={handleSearch} />
             <GoogleMap
               mapContainerStyle={MAP_CONTAINER_STYLE}
               center={NZ_CENTER}

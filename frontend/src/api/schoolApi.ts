@@ -6,6 +6,9 @@ export interface SchoolListParams {
   school_type?: string;
   ownership_type?: string;
   keyword?: string;
+  region?: string;
+  city?: string;
+  suburb?: string;
   page?: number;
   page_size?: number;
 }
@@ -21,9 +24,10 @@ export async function fetchSchools(params: SchoolListParams): Promise<PaginatedS
   const response = await apiClient.get<School[]>("/schools", {
     params: {
       school_type: params.school_type,
-      name: params.keyword, // Backend uses 'name' parameter
-      city: undefined, // Not used in current implementation
-      region: undefined, // Not used in current implementation
+      name: params.keyword,
+      region: params.region,
+      city: params.city,
+      suburb: params.suburb,
     }
   });
   // Convert List response to PaginatedSchools format
@@ -37,6 +41,22 @@ export async function fetchSchools(params: SchoolListParams): Promise<PaginatedS
 
 export async function fetchSchoolById(id: number): Promise<School> {
   const response = await apiClient.get<School>(`/schools/${id}`);
+  return response.data;
+}
+
+export interface TopSchoolsParams {
+  limit?: number;
+  school_type?: string;
+}
+
+/** Top schools ordered by pass rate (per education system). */
+export async function fetchTopSchools(params?: TopSchoolsParams): Promise<School[]> {
+  const response = await apiClient.get<School[]>("/schools/top", {
+    params: {
+      limit: params?.limit ?? 10,
+      school_type: params?.school_type ?? undefined,
+    },
+  });
   return response.data;
 }
 

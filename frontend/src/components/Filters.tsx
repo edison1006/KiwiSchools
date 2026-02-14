@@ -11,17 +11,19 @@ export type SchoolTypeFilter =
   | "institute_of_technology"
   | "private_tertiary";
 
+export type FiltersState = {
+  region: string;
+  city: string;
+  suburb: string;
+  schoolType: SchoolTypeFilter;
+};
+
 export interface FiltersProps {
   region: string;
   city: string;
   suburb: string;
   schoolType: SchoolTypeFilter;
-  onChange: (next: {
-    region: string;
-    city: string;
-    suburb: string;
-    schoolType: SchoolTypeFilter;
-  }) => void;
+  onChange: (next: FiltersState) => void;
 }
 
 export function Filters(props: FiltersProps) {
@@ -30,13 +32,14 @@ export function Filters(props: FiltersProps) {
   const handleInput =
     (field: "region" | "city" | "suburb" | "schoolType") =>
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const value = e.target.value;
       onChange({
         region,
         city,
         suburb,
         schoolType,
-        [field]: e.target.value
-      } as FiltersProps);
+        [field]: field === "schoolType" ? (value as SchoolTypeFilter) : value
+      });
     };
 
   return (

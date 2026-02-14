@@ -36,6 +36,10 @@ class SchoolRead(BaseModel):
     qs_world_rank: Optional[int] = None
     strong_subjects: Optional[str] = None
     university_type: Optional[str] = None
-    
+
+    # Pass rate by education system (for Top Schools ranking)
+    pass_rate: Optional[float] = None
+    curriculum: Optional[str] = None
+
     class Config:
         from_attributes = True

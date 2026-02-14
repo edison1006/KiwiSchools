@@ -5,6 +5,10 @@ export interface School {
   city?: string;
   latitude?: number | null;
   longitude?: number | null;
+  /** Pass rate (e.g. 0–100) by education system; used for Top Schools ranking */
+  pass_rate?: number | null;
+  /** Curriculum / education system, e.g. NCEA, IB, Cambridge */
+  curriculum?: string | null;
   [key: string]: unknown; // Allow additional properties from backend
 }
 

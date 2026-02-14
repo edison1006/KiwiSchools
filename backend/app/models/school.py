@@ -36,3 +36,8 @@ class School(SQLModel, table=True):
     qs_world_rank: Optional[int] = None
     strong_subjects: Optional[str] = None
     university_type: Optional[str] = None
+
+    # Pass rate / achievement by education system (e.g. NCEA, IB, Cambridge)
+    # Store as 0–100 or decimal; used for "Top Schools" ranking
+    pass_rate: Optional[float] = None
+    curriculum: Optional[str] = None  # e.g. "NCEA", "IB", "Cambridge"

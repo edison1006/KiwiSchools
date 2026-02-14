@@ -39,6 +39,24 @@ def list_schools(
     return result
 
 
+@router.get("/top", response_model=List[SchoolRead])
+def list_top_schools(
+    *,
+    db: Session = Depends(get_db),
+    limit: int = Query(default=10, ge=1, le=50),
+    school_type: Optional[str] = Query(default=None, description="Filter by school type, e.g. secondary"),
+) -> List[School]:
+    """
+    List schools ordered by pass rate (highest first).
+    Only includes schools with a non-null pass_rate.
+    """
+    query = select(School).where(School.pass_rate.isnot(None)).order_by(School.pass_rate.desc())
+    if school_type:
+        query = query.where(School.school_type == school_type)
+    result = db.execute(query).limit(limit).scalars().all()
+    return result
+
+
 @router.get("/{school_id}", response_model=SchoolRead)
 def get_school(
     *, db: Session = Depends(get_db), school_id: int

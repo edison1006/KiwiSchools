@@ -180,18 +180,12 @@ export function MapPage() {
     try {
       const data = await fetchSchools({
         keyword: keyword || undefined,
-        school_type: schoolType || undefined
+        school_type: schoolType || undefined,
+        city: cityFilter || undefined,
       });
 
       // Only show schools that have coordinates
       let withCoords = data.items.filter((s) => s.latitude && s.longitude);
-
-      // City filter (frontend-side for now)
-      if (cityFilter) {
-        withCoords = withCoords.filter(
-          (s) => s.city && s.city.toLowerCase() === cityFilter.toLowerCase()
-        );
-      }
 
       // Education system filter (mainly for kindergartens)
       if (educationSystem) {

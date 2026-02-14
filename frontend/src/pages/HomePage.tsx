@@ -1,6 +1,8 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { fetchTopSchools } from "../api/schoolApi";
+import type { School } from "../types";
 
 const QUICK_CITIES_BY_ISLAND = {
   north: ["Auckland", "Hamilton", "Tauranga", "Wellington"],
@@ -69,7 +71,16 @@ const SCHOOL_TYPE_CARDS = [
 export function HomePage() {
   const { t, i18n } = useTranslation();
   const [keyword, setKeyword] = useState("");
+  const [topSchools, setTopSchools] = useState<School[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchTopSchools({ limit: 8, school_type: "secondary" })
+      .then((data) => { if (!cancelled) setTopSchools(data); })
+      .catch(() => { if (!cancelled) setTopSchools([]); });
+    return () => { cancelled = true; };
+  }, []);
   
   // Fallback translations if i18n fails
   const discoverSchools = i18n.isInitialized ? t("discoverSchools") : "Discover schools across New Zealand";
@@ -149,7 +160,7 @@ export function HomePage() {
           }}
         ></div>
         <div className="relative p-8 md:p-12">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
             <div className="flex-1 space-y-3">
               <h2 className="text-2xl font-bold text-white md:text-3xl">
                 {topSchoolsTitle}
@@ -165,6 +176,36 @@ export function HomePage() {
                 {exploreTopSchools}
               </button>
             </div>
+            {topSchools.length > 0 && (
+              <div className="w-full md:max-w-sm rounded-xl bg-white/10 backdrop-blur p-4 space-y-2">
+                <p className="text-xs font-semibold text-emerald-100 uppercase tracking-wide">
+                  By pass rate (secondary)
+                </p>
+                <ul className="space-y-1.5 max-h-48 overflow-y-auto">
+                  {topSchools.map((s) => (
+                    <li key={s.id}>
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/schools/${s.id}`)}
+                        className="w-full text-left text-sm text-white hover:text-emerald-100 flex justify-between items-baseline gap-2"
+                      >
+                        <span className="truncate">{s.name}</span>
+                        {s.pass_rate != null && (
+                          <span className="text-emerald-200 shrink-0">
+                            {typeof s.pass_rate === "number" ? `${s.pass_rate}%` : String(s.pass_rate)}
+                          </span>
+                        )}
+                      </button>
+                      {(s.curriculum || s.city) && (
+                        <p className="text-xs text-emerald-200/80 truncate pl-0.5">
+                          {[s.curriculum, s.city].filter(Boolean).join(" · ")}
+                        </p>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </section>
